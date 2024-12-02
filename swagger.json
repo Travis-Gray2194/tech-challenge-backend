@@ -1,0 +1,73 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Credit Card Validation API",
+    "version": "1.0.0",
+    "description": "An API to validate credit card numbers and identify card types."
+  },
+  "paths": {
+    "/validate-card": {
+      "post": {
+        "summary": "Validate Credit Card Number",
+        "description": "Validates the format of a credit card number and identifies its type (Visa, MasterCard, Discover).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "card_number": {
+                    "type": "string",
+                    "example": "4111111111111111"
+                  }
+                },
+                "required": ["card_number"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Card number is valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": { "type": "boolean" },
+                    "card_type": { "type": "string" },
+                    "message": { "type": "string" }
+                  },
+                  "example": {
+                    "valid": true,
+                    "card_type": "Visa",
+                    "message": "Card number is valid"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid card number or unsupported card type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valid": { "type": "boolean" },
+                    "message": { "type": "string" }
+                  },
+                  "example": {
+                    "valid": false,
+                    "message": "Card number is invalid or card type is unsupported"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
